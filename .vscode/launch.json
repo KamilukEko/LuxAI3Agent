@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Run luxai-s3 and Open Replay",
+        "type": "python",
+        "request": "launch",
+        "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+        "program": "${workspaceFolder}/.venv/Scripts/luxai-s3.exe",
+        "args": ["main.py", "main.py", "--output=replay.html"],
+        "console": "integratedTerminal",
+        "justMyCode": true,
+        "postDebugTask": "openReplay"
+      }
+    ]
+  }
+  
+  
