@@ -1,21 +1,18 @@
-## Lux AI Season 3 Agent
+# Lux AI Season 3 Agent
 
-This agent is created as a entry to challenge created by Kagle - https://www.kaggle.com/competitions/lux-ai-season-3.
-This project will be expanded in repository that belongs to Neural.WZIM.
+This agent is created as an entry for the **Lux AI Season 3** challenge on Kaggle:  
+[Lux AI Season 3 Competition](https://www.kaggle.com/competitions/lux-ai-season-3).  
+This project will be further developed in the **Neural.WZIM** repository.
 
-## How to run
+---
 
-# Automatic way
+## How to Run
 
-Simply use Run and Debug option in VSC thanks to custom launch.json options.
+### 🔹 Automatic Way  
+Use the **Run and Debug** option in VS Code with a custom `launch.json` configuration.
 
-# Manual way
+### 🔹 Manual Way  
+Run the following command to set the agent against itself:
 
-Run command setting agent against itself:
-
-```
+```sh
 luxai-s3 main.py main.py --output=replay.html
-```
-
-Open generated replay.html file.
-
