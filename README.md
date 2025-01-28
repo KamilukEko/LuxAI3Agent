@@ -1,4 +1,4 @@
-# Lux AI Season 3 Agent
+## Lux AI Season 3 Agent
 
 This agent is created as a entry to challenge created by Kagle - https://www.kaggle.com/competitions/lux-ai-season-3.
 This project will be expanded in repository that belongs to Neural.WZIM.
