@@ -1,6 +1,10 @@
 {
     "files.exclude": {
         "**/__pycache__": true,
-        ".venv": true
+        ".venv": true,
+        "replay.html": true,
+        "requirements.txt": true,
+        ".gitignore": true,
+        "README.md": true
     }
 }
