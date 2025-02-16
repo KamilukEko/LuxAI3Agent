@@ -27,11 +27,12 @@ class MapManager:
                 tile.type = TileType(types[tile.position[0]][tile.position[1]])
             
     
-    def update_units(self, sensor_mask, energies, types):
+    def update_units(self, units):
         for tile in self.map:
-            tile.is_visible = sensor_mask[tile.position[0]][tile.position[1]]
-            tile.energy = energies[tile.position[0]][tile.position[1]]
-            tile.type = types[tile.position[0]][tile.position[1]]
+            tile.units = []
+            for unit in units:
+                if unit.position == tile.position:
+                    tile.units.append(units.pop(unit))
             
             
     def update(self, obs: dict):
@@ -45,28 +46,5 @@ class MapManager:
         visible_relic_node_ids = np.where(unit_mask)[0]
         relic_positions = np.array(obs["relic_nodes"])
         self.update_relic_tiles(visible_relic_node_ids, relic_positions)
-        
-        unit_positions = np.array(obs["units"]["position"][self.team_id])
-        unit_energys = np.array(obs["units"]["energy"][self.team_id])
-        self.update_units()
-               
-    
-    def update_map(self, obs: dict):
-        unit_mask = np.array(obs["units_mask"][self.team_id]) # shape (max_units, )
-        unit_positions = np.array(obs["units"]["position"][self.team_id]) # shape (max_units, 2)
-        unit_energys = np.array(obs["units"]["energy"][self.team_id]) # shape (max_units, 1)
-        observed_relic_node_positions = np.array(obs["relic_nodes"]) # shape (max_relic_nodes, 2)
-        observed_relic_nodes_mask = np.array(obs["relic_nodes_mask"]) # shape (max_relic_nodes, )
-        team_points = np.array(obs["team_points"]) # points of each team, team_points[self.team_id] is the points of the your team
-        
-        # ids of units you can control at this timestep
-        available_unit_ids = np.where(unit_mask)[0]
-        # visible relic nodes
-        visible_relic_node_ids = set(np.where(observed_relic_nodes_mask)[0])
-        
-        sensor_mask = np.array(obs["units_mask"])
-        
-        actions = np.zeros((self.env_cfg["max_units"], 3), dtype=int)
-        
         
         

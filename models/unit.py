@@ -1,6 +1,10 @@
 class Unit:
-    def __init__(self, name, energy, position, team_id) -> None:
-        self.name = name
+    def __init__(self, energy, position, is_friendly) -> None:
         self.energy = energy
         self.position = position
-        self.team_id = team_id
+        self.is_friendly = is_friendly
+        
+    def update(self, energy, position):
+        self.energy = energy
+        self.position = position
+        
