@@ -1,6 +1,7 @@
-from abc import ABC, abstractmethod
+from services.map_manager import MapManager
 
-class AgentBase(ABC):
+
+class AgentBase:
     def __init__(self, player: str, env_cfg) -> None:
         self.player = player
         self.opp_player = "player_1" if self.player == "player_0" else "player_0"
@@ -9,11 +10,14 @@ class AgentBase(ABC):
         
         self.env_cfg = env_cfg
         
-        self.relic_node_positions = []
-        self.discovered_relic_nodes_ids = set()
-        self.unit_explore_locations = dict()
+        self.map_manager = MapManager()
 
-    @abstractmethod
+
+    def update_state(self, step: int, obs: dict):
+        pass
+    
+    
     def act(self, step: int, obs: dict):
+        self.map_manager.update(obs)
         pass
     
