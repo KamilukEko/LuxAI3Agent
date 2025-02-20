@@ -19,6 +19,10 @@ class Agent():
         
         step is the current timestep number of the game starting from 0 going up to max_steps_in_match * match_count_per_episode - 1.
         """
+
+        ##################################################################
+        #### OBSERVATION STEP (UPDATE OF OUR UNIT AND MAP MANAGER) #######
+        ##################################################################
         unit_mask = np.array(obs["units_mask"][self.team_id]) # shape (max_units, )
         unit_positions = np.array(obs["units"]["position"][self.team_id]) # shape (max_units, 2)
         unit_energys = np.array(obs["units"]["energy"][self.team_id]) # shape (max_units, 1)
@@ -45,7 +49,11 @@ class Agent():
                 self.relic_node_positions.append(observed_relic_node_positions[id])
             
 
+
         # unit ids range from 0 to max_units - 1
+        #######################################################################
+        #### ACTION STEP (AGENT MAKES ACTION BASED ON MAP AND UNIT MANAGER) ###
+        #######################################################################
         for unit_id in available_unit_ids:
             unit_pos = unit_positions[unit_id]
             unit_energy = unit_energys[unit_id]
@@ -66,4 +74,7 @@ class Agent():
                     rand_loc = (np.random.randint(0, self.env_cfg["map_width"]), np.random.randint(0, self.env_cfg["map_height"]))
                     self.unit_explore_locations[unit_id] = rand_loc
                 actions[unit_id] = [direction_to(unit_pos, self.unit_explore_locations[unit_id]), 0, 0]
+
+        with open('proper_actions_old.txt', 'a+') as f:
+            f.write(str(actions)+'\n')
         return actions
