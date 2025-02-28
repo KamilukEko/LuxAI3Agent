@@ -6,3 +6,6 @@ direction_debug.txt
 relic_debug.txt
 .gitignore
 units_debug.txt
+replays/
+.vscode/
+

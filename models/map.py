@@ -1,28 +1,47 @@
-from models.map_tile import MapTile
 import numpy as np
+from models.tile_type import TileType
 
 class Map:
-    def __init__(self):
-        # Inicjalizacja płaskiej listy kafelków
-        self.tiles = [MapTile([x, y]) for x in range(24) for y in range(24)]
+    def __init__(self, width=24, height=24):
+        # Use numpy arrays for all tile properties instead of objects
+        self.width = width
+        self.height = height
         
-        # Tworzenie słownika dla szybkiego dostępu po współrzędnych
-        self.tiles_dict = {}
-        for tile in self.tiles:
-            key = (tile.position[0], tile.position[1])
-            self.tiles_dict[key] = tile
+        # Initialize arrays with default values
+        self.energy = np.full((width, height), -1)
+        self.tile_type = np.full((width, height), TileType.UNKNOWN.value)
+        self.has_relic = np.zeros((width, height), dtype=bool)
+        self.is_visible = np.zeros((width, height), dtype=bool)
+        
+        # Track units separately using a list for each position
+        self.units = [[[] for _ in range(height)] for _ in range(width)]
     
     def __getitem__(self, key):
-        """Obsługuje dostęp przez map[x, y]"""
+        """Access properties for a coordinate as a tuple."""
         if isinstance(key, tuple) and len(key) == 2:
             x, y = key
-        else:
-            # Jeśli dostęp przez pojedynczy argument, który jest krotką
-            x, y = key[0], key[1]
-            
-        # Zwróć kafelek lub None, jeśli nie istnieje
-        return self.tiles_dict.get((x, y))
+            if 0 <= x < self.width and 0 <= y < self.height:
+                return {
+                    'position': (x, y),
+                    'energy': self.energy[x, y],
+                    'tile_type': TileType(self.tile_type[x, y]),
+                    'has_relic': self.has_relic[x, y],
+                    'is_visible': self.is_visible[x, y],
+                    'units': self.units[x][y]
+                }
+        return None
     
-    def __iter__(self):
-        """Umożliwia iterację: for tile in map:"""
-        return iter(self.tiles)
+    def get_all_positions(self):
+        """Get all map positions as a list of tuples."""
+        return [(x, y) for x in range(self.width) for y in range(self.height)]
+    
+    def update_tile(self, x, y, properties):
+        """Update properties for a specific tile."""
+        if 'energy' in properties:
+            self.energy[x, y] = properties['energy']
+        if 'tile_type' in properties:
+            self.tile_type[x, y] = properties['tile_type'].value if hasattr(properties['tile_type'], 'value') else properties['tile_type']
+        if 'has_relic' in properties:
+            self.has_relic[x, y] = properties['has_relic']
+        if 'is_visible' in properties:
+            self.is_visible[x, y] = properties['is_visible']
