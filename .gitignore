@@ -1,3 +1,11 @@
 .venv/
 __pycache__/
 replay.html
+actions_debug.txt
+direction_debug.txt
+relic_debug.txt
+.gitignore
+units_debug.txt
+replays/
+.vscode/
+

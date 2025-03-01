@@ -3,7 +3,11 @@ import sys
 from argparse import Namespace
 import os
 
-from agent import Agent
+# switch it back to make it work
+# from agent import Agent
+from models.agent_base import AgentBase
+
+
 from lux.kit import from_json
 
 # This code comes directly from documentation and had to stay untouched. I did some minor changes to look prettier.
@@ -32,7 +36,9 @@ def get_agents_response(observation, configurations):
     remainingOverageTime = observation.remainingOverageTime
     
     if step == 0:
-        agent_dict[player] = Agent(player, configurations["env_cfg"])
+        # agent_dict[player] = Agent(player, configurations["env_cfg"])
+        agent_dict[player] = AgentBase(player, configurations["env_cfg"])
+
     if "__raw_path__" in configurations:
         dirname = os.path.dirname(configurations["__raw_path__"])
     else:
